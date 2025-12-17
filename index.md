@@ -55,7 +55,7 @@ title: "Giabbi's Writeups"
 <section class="bio-section" style=" padding: 10px; border-radius: 6px; margin: 40px 0; color: #ccc;">
   <h2 style="color: #0f0; margin-bottom: 0.5em;">About Me</h2>
   <p>
-    Ciao bello! I’m <strong>Giabbi</strong> (short for my name, Giancarlo Umberto). I’m an Italian-born cybersecurity enthusiast and future CS student at Carnegie Mellon University. I built this site to both track my journey and have some fun (and by fun I mean flexing my skills of course). Here's some stuff I like to do:
+    Ciao bello! I’m <strong>Giabbi</strong> (short for Giancarlo Umberto). I’m an Italian-born cybersecurity enthusiast and CS student at Carnegie Mellon University. I built this site to both track my journey and have some fun (and by fun I mean flexing my skills of course). Here's some stuff I like to do:
   </p>
   <ul style="margin-left: 1.2em; line-height: 1.6;">
     <li>Solving challenges on TryHackMe or similar websites and learning from every win (and every “wait, why did that work?”)</li>
@@ -196,7 +196,7 @@ title: "Giabbi's Writeups"
 <section id="tools" style="margin: 40px 0; color: #ccc;">
   <h2 style="color: #0f0; margin-bottom: 0.5em;">Tools &amp; Tech</h2>
   <p>
-    🐍 Python &nbsp;•&nbsp; 🔨 Burp Suite &nbsp;•&nbsp; 🔍 Wireshark &nbsp;•&nbsp; 📡 Nmap &nbsp;•&nbsp; ⚙️ Custom Scripts
+    Python &nbsp;•&nbsp; Burp Suite &nbsp;•&nbsp; Wireshark &nbsp;•&nbsp; Nmap &nbsp;•&nbsp; Custom Scripts
   </p>
   <p style="font-style: italic; margin-top: 0.5em;">
       Remember! You are not a script kiddie if you know what's going on (I hope).
