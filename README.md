@@ -35,6 +35,7 @@ While this repository is primarily for my personal learning journey, contributio
 
 To test my website on your local machine, follow these steps:
 
+### Local Dev
 Make sure you have the latest version of ruby and bundler version 2.6.7 installed, if you are on linux then run:
 ```bash
 sudo apt update
@@ -52,7 +53,16 @@ Lastly, run the following command for a preview of the website that updates ever
 bundle exec jekyll serve --livereload
 ```
 
-Now you can find the website at `http://localhost:4000`
+### Docker Container
+If you have other ruby projects on your local machine, then this is your best option to avoid conflicts.
+
+Ensure docker is installed (if, like me, you are in WSL you'll need [docker desktop](https://www.docker.com/products/docker-desktop/)) and execute the following command:
+```bash
+docker compose up --build
+```
+Note that after the first time you can omit the `--build` flag. 
+
+In either case you can find the website at `http://localhost:4000`
 
 ## License
 The writeups and content in this repository are licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
