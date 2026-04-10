@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "Crypto Failures | Walkthrough Writeup & Full Explanation"
+title: "Crypto Failures TryHackMe Walkthrough"
+description: "Comprehensive TryHackMe Crypto Failures walkthrough. Learn how to forge a DES encrypted cookie and crack secret keys using known plaintext and Hashcat."
 date: 2025-03-03
 banner: "assets/images/crypto_failures.png"
 permalink: /writeups/crypto-failures
@@ -24,6 +25,7 @@ First exploit the encryption scheme in the simplest possible way, then find the 
     - [Exploring the Application](#app)
     - [Forging Admin Cookie - First Flag](#first)
     - [Decrypting Encrypted Secret - Second Flag](#second)
+- [Challenge Questions Answered](#answers)
 - [Main takeaways](#end)
 
 ## Walkthrough {#start}
@@ -33,10 +35,10 @@ It seems like TryHackMe is really into their crypto recently, well then let's ju
 
 The first thing, as always, is to visit the IP address from our browser to gather a sense of what the application is like. Unlike the last cryptography challenge we went over, this time the website seems to be much more "bare-bones":
 
-![index rendered](Crypto-Failures/images/index.png)
+![Crypto Failures TryHackMe index page](Crypto-Failures/images/index.png)
 
 Don't let that fool you however, my detective instincts are already starting to itch. In particular, why is "crypt" in "encryption" <b>bold</b>? To investigate, I decided to take a look at the HTML to see if there was anything useful, and sure there was!
-![index html](Crypto-Failures/images/indexHTML.png)
+![HTML source code revealing backup file in Crypto Failures](Crypto-Failures/images/indexHTML.png)
 ```html
 <!-- TODO remember to remove .bak files -->
 ```
@@ -291,6 +293,16 @@ By doing this, we now have the first characters of the next block in previous co
 Now all we have to do is rinse and repeat this process until we have the full flag. Personally, I did this process by hand, but I am sure there are tools or scripts out there that can automate this process. If you know such thing feel free to open an issue, and I will review it as fast as possible.
 
 After a bit of hashcat, we finally have our second flag!
+
+## Challenge Questions Answered {#answers}
+
+### What is the value of the web flag?
+The web flag is obtained by exploiting the 8-character block size of the legacy DES encryption used for the session cookie. By manipulating the length of your `User-Agent` HTTP header, you can align the encrypted blocks and forge an `admin` cookie to bypass authentication.
+**Flag format:** `THM{...}`
+
+### What is the encryption key?
+To find the encryption key, perform a known-plaintext attack against the DES cookie using Hashcat. By taking advantage of the known TryHackMe flag format (`THM{`) and alternating the length of the `User-Agent` header to shift the ciphertext blocks, you can drastically reduce the cracking time and decrypt the full key.
+**Flag format:** `THM{...}`
 
 ## Main Takeaways {#end}
 As always, there is a lot to learn in these challenges. Today we have two main Takeaways:
