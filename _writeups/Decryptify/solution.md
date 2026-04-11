@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "Decryptify | Walkthrough Writeup & Full Explanation"
+title: "Decryptify TryHackMe Walkthrough"
+description: "Complete TryHackMe Decryptify walkthrough. Learn to reverse engineer obfuscated JS, forge tokens, and exploit a CBC padding oracle using PadBuster."
 date: 2025-02-23
 banner: "assets/images/decryptify.png"
 permalink: /writeups/decryptify
@@ -24,6 +25,7 @@ Can you decrypt the secrets and get RCE on the system?
     - [Accessing the user account, first flag!](#Accessing-the-user-account-first-flag)
     - [The real decryption problem](#The-real-decryption-problem)
     - [Can you hear that? It's an oracle talking! (second flag)](#Can-you-hear-that-Its-an-oracle-talking-second-flag)
+- [Challenge Questions Answered](#answers)
 - [What did we learn? (Spoiler: a lot!)](#What-did-we-learn-Spoiler-a-lot)
 - [Acknowledgements and resources](#Acknowledgements-and-resources)
 ---
@@ -44,7 +46,7 @@ to see if I could find anything useful. After an espresso or two, it finally pop
 Once we land on the page, we can see two login forms, one that requires a username and an invite code, and the other requires an email instead of the username. Another interesting thing was the API documentation page, which you can find in the footer of the login page, but unfortunately this is password protected. 
 <br><br>
 After digging into the source code of the page I found an interesting file, API.js.
-<br>![API.js file](Decryptify/images/API.png)<br>
+<br>![Decryptify TryHackMe obfuscated API.js file](Decryptify/images/API.png)<br>
 The code in this file seems obfuscated, but since we don't really have anything else to work with it is worth a shot to make sense of it!
 <br><br>
 After looking at the code, I decided to do what any sane person would, put a few console.log statement into the file (or I should say, a copy of it I saved on my computer) and then ran it with ```node``` 
@@ -153,7 +155,7 @@ The result of this program is ```NDYxNTg5ODkx``` which, if used on the second lo
 
 ### The real decryption problem {#The-real-decryption-problem}
 Now that we are on the dashboard, there doesn't seem to be anything useful at first glance. Here is a picture:
-![dashboard](Decryptify/images/dashboard.png) 
+![Decryptify TryHackMe dashboard after logging in](Decryptify/images/dashboard.png)
 That admin user is really goloso, but unfortunately it doesn't seem like we can access it the same way we did with our normal user. 
 <br><br>
 When dealing with web challenges, my personal last resort when I am really stuck is just to check the HTML, it usually doesn't lead to anything so... WOAH what is this?!
@@ -236,6 +238,16 @@ Once we run it, another prompt is going to appear to ask us which response signa
 
 Once it is over, we will get a fresh ciphertext already encoded in base64. This is now ready to be sent in that hidden form. If you did everything correctly, you should see the flag popping up where the footer is!
 
+## Challenge Questions Answered {#answers}
+
+### How do you get the first flag on the dashboard?
+Enumerate the `/log` endpoint to find the email `alpha@fake.thm` and its invite code. By reverse-engineering the `API.js` and `api.php` logic, you can brute-force the seed constant (`99999`). Use this constant to forge a valid invite code for `hello@fake.thm`, allowing you to log in and access the dashboard flag.
+**Flag format:** `THM{...}`
+
+### Can you decrypt the secrets and get RCE on the system?
+Yes, by exploiting a CBC padding oracle vulnerability found in the hidden `date` form input on the dashboard. Use a tool like `padbuster` to decrypt the payload, revealing it executes system commands. Encrypt a new payload (e.g., `cat /home/ubuntu/flag.txt`) and submit it to achieve Remote Code Execution and read the final flag.
+**Flag format:** `THM{...}`
+
 ## What did we learn? (Spoiler, a lot!) {#What-did-we-learn-Spoiler-a-lot}
 I have to admit, this was quite the journey, and as such there are a few takeaways to learn:
 - <b>Backend and Frontend should be used properly:</b> the first problem with this app was that a file, namely API.js, that was supposed to be on the backend, was on the frontend instead. Allowing us to bypass the authentication for the API documentation
@@ -247,7 +259,7 @@ The main vulnerability in this program was (arguably) the padding oracle attack.
 Padding Oracle attacks exploit a loose-lipped encryption system that tells us when we mess up. Normally, when a server decrypts a message, it removes padding (extra bytes added to make the message fit into a block). If the padding is incorrect, a properly configured system should give a generic error. But some systems? Oh, no. They spill the beans by throwing a specific padding error. And that, my friend, gives us the power to manipulate encrypted data bit by bit—until we completely break it.
 
 
-![CBC multiblock](Decryptify/images/cbc.png)
+![Visual explanation of a CBC multi-block padding oracle attack](Decryptify/images/cbc.png)
 
 
 Let’s visualize it: Imagine a message split into blocks like [C1] [C2] [C3], where each block is encrypted separately but depends on the previous one (because CBC mode chains them together). Now, let’s say we only have the ciphertext (not the key). If we change just the last byte of [C2] and send it to the server, it decrypts it and checks the padding. If the padding is valid, we know our guess was correct. If not? We tweak it again and keep adjusting byte by byte, using the errors as a guide until we decrypt the entire block. Rinse and repeat, and suddenly we have full decryption and even the ability to encrypt our own data (which is exactly what we did with PadBuster!).

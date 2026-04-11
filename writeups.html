@@ -1,126 +1,127 @@
 ---
 layout: default
-title: "All Writeups"
+title: "All TryHackMe CTF Writeups"
+description: "Browse all cybersecurity CTF writeups and TryHackMe walkthroughs by Giabbi."
 permalink: /writeups/
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TryHackMe Writeups</title>
-  <style>
-    /* Reset some default styling */
-    body, h1, h2, h3, p, ul, li, a, button {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    /* Logo styling at the top */
-    .logo {
-      margin-bottom: 30px;
-      text-align: center; 
-    }
-    .logo img {
-      max-width: 200px;
-      height: auto;
-    }
-    /* Writeup list styling */
-    .writeup-list {
-      list-style: none;
-      padding: 0;
-      margin: 30px 0;
-    }
-    .writeup-item {
-      background-color: #333;
-      border: 1px solid #00ff00;
-      border-radius: 5px;
-      margin: 15px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px;
-    }
-    .writeup-item img {
-      max-width: 50px;
-      margin-right: 20px;
-    }
-    .writeup-title {
-      flex: 1;
-      text-align: left;
-      font-size: 1.2em;
-      color: #00ff00;
-    }
-    .writeup-item button {
-      background-color: #222;
-      color: #00ff00;
-      border: 1px solid #00ff00;
-      padding: 8px 16px;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .writeup-item button:hover {
-      background-color: #00ff00;
-      color: #222;
-    }
-    /* Footer note styling */
-    .footer-note {
-      margin-top: 40px;
-      font-size: 1.5em;
-      color: #00ff00;
-      text-align: center; 
-    }
-  </style>
-</head>
-<body>
-    <br>
-  <div class="container">
-    <!-- Top centered TryHackMe logo -->
-    <div class="logo">
-      <img src="../assets/images/THMlogo-gray_scale.png" alt="TryHackMe Logo">
-    </div>
-    
-    <!-- Vertical list of writeups -->
-    <ul class="writeup-list">
-      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-        <img src="../assets/images/smol.png" alt="Writeup 4 Logo" style="margin-right: 0;">
-        <div class="writeup-title" style="min-width: 120px;">Smol</div>
-        <button onclick='window.location.href="/writeups/smol"' style="margin-top: 5px;">View Writeup</button>
-      </li>
+<style>
+  /* Wrapper container */
+  .writeups-container {
+    max-width: 800px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
 
-      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-        <img src="../assets/images/hammer.png" alt="Writeup 4 Logo" style="margin-right: 0;">
-        <div class="writeup-title" style="min-width: 120px;">Hammer</div>
-        <button onclick='window.location.href="/writeups/hammer"' style="margin-top: 5px;">View Writeup</button>
-      </li>
-      
-      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-        <img src="../assets/images/crypto_failures.png" alt="Writeup 3 Logo" style="margin-right: 0;">
-        <div class="writeup-title" style="min-width: 120px;">Crypto Failures</div>
-        <button onclick="window.location.href='/writeups/crypto-failures'" style="margin-top: 5px;">View Writeup</button>
-      </li>
-      
-      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-        <img src="../assets/images/decryptify.png" alt="Writeup 2 Logo" style="margin-right: 0;">
-        <div class="writeup-title" style="min-width: 120px;">Decryptify</div>
-        <button onclick="window.location.href='/writeups/decryptify'" style="margin-top: 5px;">View Writeup</button>
-      </li>
-      
-      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-        <img src="../assets/images/sticker.png" alt="Writeup 1 Logo" style="margin-right: 0;">
-        <div class="writeup-title" style="min-width: 120px;">The Sticker Shop</div>
-        <button onclick="window.location.href='/writeups/the-sticker-shop'" style="margin-top: 5px;">View Writeup</button>
-      </li>
-    </ul>
-    
-    <!-- Bottom centered heading -->
-    <h2 class="footer-note">Other Websites and Writeups Coming Soon!</h2>
+  /* Logo styling at the top */
+  .writeups-container .logo {
+    margin-bottom: 30px;
+    text-align: center; 
+  }
+  .writeups-container .logo img {
+    max-width: 200px;
+    height: auto;
+  }
+
+  /* Writeup list styling */
+  .writeups-container .writeup-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+  }
+  
+  /* Ensure high specificity here so the margin applies perfectly */
+  .writeups-container .writeup-item {
+    background-color: #333;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    margin: 15px 0 !important; /* Vertical spacing restored! */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .writeups-container .writeup-item img {
+    max-width: 50px;
+    margin-right: 20px;
+  }
+  
+  .writeups-container .writeup-title {
+    flex: 1;
+    text-align: left;
+    font-size: 1.2em;
+    color: #00ff00;
+  }
+
+  /* SEO FIX: Style the <a> tag to look and act exactly like your old button */
+  .writeups-container .writeup-item a.view-btn {
+    background-color: #222;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13.3333px; 
+    font-family: Arial, sans-serif; 
+    text-align: center;
+  }
+  
+  .writeups-container .writeup-item a.view-btn:hover {
+    background-color: #00ff00;
+    color: #222;
+  }
+
+  /* Footer note styling */
+  .writeups-container .footer-note {
+    margin-top: 40px;
+    font-size: 1.5em;
+    color: #00ff00;
+    text-align: center; 
+    margin-bottom: 40px;
+  }
+</style>
+
+<br>
+<div class="writeups-container">
+  <div class="logo">
+    <img src="{{ '/assets/images/THMlogo-gray_scale.png' | relative_url }}" alt="TryHackMe Logo">
   </div>
-</body>
-</html>
+  
+  <ul class="writeup-list">
+    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+      <img src="{{ '/assets/images/smol.png' | relative_url }}" alt="Smol Writeup Logo" style="margin-right: 0;">
+      <div class="writeup-title" style="min-width: 120px;">Smol</div>
+      <a href="{{ '/writeups/smol' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+    </li>
+
+    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+      <img src="{{ '/assets/images/hammer.png' | relative_url }}" alt="Hammer Writeup Logo" style="margin-right: 0;">
+      <div class="writeup-title" style="min-width: 120px;">Hammer</div>
+      <a href="{{ '/writeups/hammer' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+    </li>
+    
+    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+      <img src="{{ '/assets/images/crypto_failures.png' | relative_url }}" alt="Crypto Failures Writeup Logo" style="margin-right: 0;">
+      <div class="writeup-title" style="min-width: 120px;">Crypto Failures</div>
+      <a href="{{ '/writeups/crypto-failures' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+    </li>
+    
+    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+      <img src="{{ '/assets/images/decryptify.png' | relative_url }}" alt="Decryptify Writeup Logo" style="margin-right: 0;">
+      <div class="writeup-title" style="min-width: 120px;">Decryptify</div>
+      <a href="{{ '/writeups/decryptify' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+    </li>
+    
+    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+      <img src="{{ '/assets/images/sticker.png' | relative_url }}" alt="The Sticker Shop Writeup Logo" style="margin-right: 0;">
+      <div class="writeup-title" style="min-width: 120px;">The Sticker Shop</div>
+      <a href="{{ '/writeups/the-sticker-shop' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+    </li>
+  </ul>
+  
+  <h2 class="footer-note">Other Websites and Writeups Coming Soon!</h2>
+</div>

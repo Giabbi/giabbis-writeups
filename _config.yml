@@ -6,7 +6,7 @@ description: "It's not cheating if you just take a peek!"
 theme: jekyll-theme-hacker
 
 # Deployment settings for GitHub Pages
-baseurl: "/" 
+baseurl: "" 
 url: "https://giabbiswriteups.com" 
 
 # Markdown processor
@@ -32,4 +32,8 @@ exclude:
   - LICENSE
   - Gemfile
   - Gemfile.lock
+
+author:
+  name: "Giancarlo Umberto (Giabbi) Ambrosino"
+  url: "https://www.linkedin.com/in/giancarloambrosino"
 

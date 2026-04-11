@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "Smol | Walkthrough Writeup & Full Explanation"
+title: "Smol TryHackMe Walkthrough"
+description: "A detailed TryHackMe Smol walkthrough. Learn how to exploit SSRF in JSmol2WP and a backdoor in the Hello Dolly WordPress plugin for privilege escalation."
 date: 2025-04-27
 banner: "assets/images/smol.png"
 permalink: /writeups/smol
@@ -26,6 +27,7 @@ As always, you can find the challenge at the following link: [TryHackMe Smol](ht
     - [Second Vulnerable Plugin](#second-plugin)
 - [Gaining a Foothold of the Machine - First Flag](#first-flag)
 - [Escalating One User at a Time - Second Flag](#second-flag)
+- [Challenge Questions Answered](#answers)
 - [Takeaways: to WP or not WP?](#end)
     - [First Plugin Analysis](#first-plugin-analysis)
     - [Second Plugin Analysis](#second-plugin-analysis)
@@ -51,7 +53,7 @@ MACHINE_IP smol.thm www.smol.thm
 ```
 Now save (ctrl x + y + ENTER on nano) and we are ready to access the website!
 
-![Website's home page](Smol/images/websites_home.png)
+![Smol TryHackMe vulnerable WordPress homepage](Smol/images/websites_home.png)
 
 The app itself is not very interesting. There are a few articles with ChatGPT text but nothing too croccante. As with every web challenge, let's see if the server was a bit too chatty and sent us something useful. 
 
@@ -59,7 +61,7 @@ The app itself is not very interesting. There are a few articles with ChatGPT te
 
 While there isn't anything that screams "hack me!", a javascript file did catch my eye:
 
-![JS Smol plugin](Smol/images/jssmol.png)
+![JSmol2WP vulnerable plugin source code in Smol TryHackMe](Smol/images/jssmol.png)
 
 JSmol? Like the name of this challenge? And it's under plugins too?! This must be one of the vulnerabilities described above, let's see what google has to say.
 
@@ -75,7 +77,7 @@ http://smol.thm/wp-content/plugins/jsmol2wp/php/jsmol.php
 ```
 Click enter and you'll have access to the `wp-config.php` file!
 
-![wp-config file](Smol/images/wp-config.png)
+![WordPress wp-config.php file exposed via SSRF in Smol](Smol/images/wp-config.png)
 
 In case you're unfamiliar with wordpress, wp-config is a php file that contains some pretty sensitive information, such as the username/password for the user database **in plain-text**. I redacted the password in the screenshot above to comply with TryHackMe's policy, but if you followed my steps you should see a long, plain-text password instead of REDACTED.
 
@@ -84,7 +86,7 @@ With these credentials, we can shoot a shot at accessing wp-admin, which is the 
 ### Second Vulnerable plugin {#second-plugin}
 Now that we are on the admin console, let's explore a little bit. On the `Pages` tab, there is an unpublished document called `Webmaster Tasks!!`
 
-![wp-admin "Pages" tab](Smol/images/wp-admin.png)
+![WordPress admin dashboard Pages tab in Smol TryHackMe](Smol/images/wp-admin.png)
 
 Inside, there are a bunch of tasks, but one in particular seems pretty sensitive:
 ```text
@@ -109,8 +111,7 @@ http://www.smol.thm/wp-admin/edit.php?cmd=whoami
 ```
 And we should see on the up left corner:
 
-![proof of concept of the backdoor](Smol/images/poc.png)
-
+![Proof of concept for Hello Dolly backdoor RCE in Smol](Smol/images/poc.png)
 
 ## Gaining a Foothold of the Machine - First Flag {#first-flag}
 
@@ -131,7 +132,7 @@ From the python server, I could see that the reverse shell file was blank (just 
 
 Let's find another directory... `/tmp/` should be a good guess. And it works!
 
-![Reverse shells on /tmp](Smol/images/tmp.png)
+![Executing a reverse shell in the /tmp directory on Smol TryHackMe](Smol/images/tmp.png)
 
 If you are wondering how I got the shell in there, here's a step by step guide:
 - Download the pentestmonkey script from the link above
@@ -322,6 +323,16 @@ And we are root! Now head over to the home directory to get your flag:
 cd
 cat root.txt
 ```
+
+## Challenge Questions Answered {#answers}
+
+### What is the user flag?
+To get the user flag, exploit an SSRF vulnerability in the JSmol2WP plugin to read `wp-config.php` and gain WordPress admin access. Use the backdoor in the custom "Hello Dolly" plugin to spawn a reverse shell. Finally, locate the database backup in `/opt`, crack the user `diego`'s password hash, and log in to read the user flag.
+**Flag format:** `THM{...}`
+
+### What is the root flag?
+From the `diego` user account, find an exposed SSH key for the user `think`. Switch to the user `gege`, unzip the `wordpress.old.zip` backup using `gege`'s cracked password to find `xavi`'s database credentials. Switch to `xavi`, who has full `sudo` privileges, and execute `sudo su` to retrieve the root flag.
+**Flag format:** `THM{...}`
 
 ## Takeaways: to WP or not WP? {#end}
 Amici what an adventure! Here's a recap of what we have learned:

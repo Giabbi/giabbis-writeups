@@ -1,6 +1,7 @@
 ---
 layout: default
-title: "The Sticker Shop | Walkthrough Writeup & Full Explanation"
+title: "The Sticker Shop TryHackMe Walkthrough"
+description: "A complete walkthrough for The Sticker Shop challenge on TryHackMe. Learn how to exploit a Blind XSS vulnerability to steal the flag."
 date: 2024-11-29
 banner: "assets/images/sticker.png"
 permalink: /writeups/the-sticker-shop
@@ -30,6 +31,7 @@ You can find the original challenge at the following link: https://tryhackme.com
     - [Cookie Payload (Unsuccessful)](#cookie-payload-unsuccessful)
     - [Direct File Access (Successful)](#direct-file-access-successful)
 - [Decode the Flag](#decode-the-flag)
+- [Challenge Questions Answered](#answers)
 
 ---
 
@@ -135,6 +137,12 @@ Be sure to change ```ATTACKER_IP``` with your openvpn ip, as per the ip fetched,
 If everything went right, you received a base64 encoded flag, to decode it use a tool like [cyberchef](https://gchq.github.io/CyberChef/).
 
 ---
+
+## Challenge Questions Answered {#answers}
+
+### Can you read the flag at http://MACHINE_IP:8080/flag.txt?
+To retrieve this flag, you must exploit a Blind XSS vulnerability on the customer feedback page. Submit a malicious HTML payload that forces the administrator's browser to fetch the `flag.txt` file and send its contents via a POST request back to a custom Python HTTP server hosted on your attacking machine. Decode the received Base64 string to reveal the flag.
+**Flag format:** `THM{...}`
 
 ## Final Thoughts
 
