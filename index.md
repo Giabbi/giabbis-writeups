@@ -123,6 +123,7 @@ layout: default
             </span>
           {% endif %}
           {{ page.title 
+            | remove: " TryHackMe Walkthrough"
             | split: "|" 
             | first 
             | strip 
