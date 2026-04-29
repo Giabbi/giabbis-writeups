@@ -5,6 +5,9 @@ description: "Comprehensive TryHackMe Crypto Failures walkthrough. Learn how to 
 date: 2025-03-03
 banner: "assets/images/crypto_failures.png"
 permalink: /writeups/crypto-failures
+type: "writeup"
+difficulty: "medium"
+source: "tryhackme"
 ---
 <br>
 

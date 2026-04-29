@@ -5,6 +5,9 @@ description: "A detailed TryHackMe Smol walkthrough. Learn how to exploit SSRF i
 date: 2025-04-27
 banner: "assets/images/smol.png"
 permalink: /writeups/smol
+type: "writeup"
+difficulty: "medium"
+source: "tryhackme"
 ---
 
 <br>

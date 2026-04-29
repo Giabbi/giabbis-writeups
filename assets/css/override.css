@@ -261,4 +261,26 @@ body .dropdown-menu li a {
     height: 120px                   !important;
   }
 }
+/* Tag Container and Base Styling */
+.tag-container {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 15px;
+  vertical-align: middle;
+}
+
+.badge-tag {
+  font-size: 0.75em;
+  padding: 3px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+/* Specific Tag Colors */
+.tag-type { background-color: #222; color: #00ff00; border: 1px solid #00ff00; }
+.tag-beginner { background-color: #004d00; color: #00ff00; }
+.tag-medium { background-color: #b38f00; color: #fff; }
+.tag-advanced { background-color: #800000; color: #fff; }
 

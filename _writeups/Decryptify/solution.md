@@ -5,6 +5,9 @@ description: "Complete TryHackMe Decryptify walkthrough. Learn to reverse engine
 date: 2025-02-23
 banner: "assets/images/decryptify.png"
 permalink: /writeups/decryptify
+type: "writeup"
+difficulty: "medium"
+source: "tryhackme"
 ---
 <br>
 

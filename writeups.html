@@ -23,6 +23,14 @@ permalink: /writeups/
     height: auto;
   }
 
+  /* Section Titles for Grouping */
+  .writeups-container .section-title {
+    color: #00ff00;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+  }
+
   /* Writeup list styling */
   .writeups-container .writeup-list {
     list-style: none;
@@ -35,7 +43,7 @@ permalink: /writeups/
     background-color: #333;
     border: 1px solid #00ff00;
     border-radius: 5px;
-    margin: 15px 0 !important; /* Vertical spacing restored! */
+    margin: 15px 0 !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,10 +60,13 @@ permalink: /writeups/
     text-align: left;
     font-size: 1.2em;
     color: #00ff00;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  /* SEO FIX: Style the <a> tag to look and act exactly like your old button */
-  .writeups-container .writeup-item a.view-btn {
+  .writeups-container .view-btn {
     background-color: #222;
     color: #00ff00;
     border: 1px solid #00ff00;
@@ -70,7 +81,7 @@ permalink: /writeups/
     text-align: center;
   }
   
-  .writeups-container .writeup-item a.view-btn:hover {
+  .writeups-container .view-btn:hover {
     background-color: #00ff00;
     color: #222;
   }
@@ -83,44 +94,127 @@ permalink: /writeups/
     text-align: center; 
     margin-bottom: 40px;
   }
+
+  /* TryHackMe Style Tags */
+  .tag-container {
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  /* Type Badge (e.g. "WRITEUP") - Outline Pill */
+  .tag-type {
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 0.65em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Difficulty Base Styling */
+  .tag-diff {
+    font-weight: 800;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Easy / Beginner - Just green text */
+  .tag-beginner {
+    color: #00ff00; 
+  }
+
+  /* Medium - Yellow/Orange solid pill */
+  .tag-medium {
+    background-color: #d4a017; 
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px; 
+  }
+
+  /* Advanced - Red solid pill */
+  .tag-advanced {
+    background-color: #cc0000;
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
 </style>
 
 <br>
 <div class="writeups-container">
-  <div class="logo">
+
+  <h2 class="section-title">Original Writeups</h2>
+  <ul class="writeup-list">
+    {% for writeup in site.writeups %}
+      {% assign source = writeup.source | default: 'original' | downcase %}
+      {% if source != 'tryhackme' %}
+      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+        
+        {% if writeup.banner %}
+        <img src="{{ writeup.banner | relative_url }}" alt="{{ writeup.title }} Logo" style="margin-right: 0;">
+        {% else %}
+        <img src="{{ '/assets/images/THMlogo-gray_scale.png' | relative_url }}" alt="Default Logo" style="margin-right: 0; max-width: 50px;">
+        {% endif %}
+        
+        <div class="writeup-title" style="min-width: 120px;">
+          {{ writeup.title | remove: " TryHackMe Walkthrough" | remove: " TryHackMe walkthrough" | remove: " TryHackme Walkthrough" | remove: " TryHackme walkthrough" }}
+          
+          <span class="tag-container">
+            {% if writeup.type %}
+            <span class="tag-type">{{ writeup.type }}</span>
+            {% endif %}
+            
+            {% if writeup.difficulty %}
+            <span class="tag-diff tag-{{ writeup.difficulty | downcase }}">{{ writeup.difficulty | capitalize }}</span>
+            {% endif %}
+          </span>
+        </div>
+        
+        <a href="{{ writeup.url | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  <div class="logo" style="margin-top: 60px;">
     <img src="{{ '/assets/images/THMlogo-gray_scale.png' | relative_url }}" alt="TryHackMe Logo">
   </div>
   
   <ul class="writeup-list">
-    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-      <img src="{{ '/assets/images/smol.png' | relative_url }}" alt="Smol Writeup Logo" style="margin-right: 0;">
-      <div class="writeup-title" style="min-width: 120px;">Smol</div>
-      <a href="{{ '/writeups/smol' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
-    </li>
-
-    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-      <img src="{{ '/assets/images/hammer.png' | relative_url }}" alt="Hammer Writeup Logo" style="margin-right: 0;">
-      <div class="writeup-title" style="min-width: 120px;">Hammer</div>
-      <a href="{{ '/writeups/hammer' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
-    </li>
-    
-    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-      <img src="{{ '/assets/images/crypto_failures.png' | relative_url }}" alt="Crypto Failures Writeup Logo" style="margin-right: 0;">
-      <div class="writeup-title" style="min-width: 120px;">Crypto Failures</div>
-      <a href="{{ '/writeups/crypto-failures' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
-    </li>
-    
-    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-      <img src="{{ '/assets/images/decryptify.png' | relative_url }}" alt="Decryptify Writeup Logo" style="margin-right: 0;">
-      <div class="writeup-title" style="min-width: 120px;">Decryptify</div>
-      <a href="{{ '/writeups/decryptify' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
-    </li>
-    
-    <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
-      <img src="{{ '/assets/images/sticker.png' | relative_url }}" alt="The Sticker Shop Writeup Logo" style="margin-right: 0;">
-      <div class="writeup-title" style="min-width: 120px;">The Sticker Shop</div>
-      <a href="{{ '/writeups/the-sticker-shop' | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
-    </li>
+    {% for writeup in site.writeups %}
+      {% assign source = writeup.source | default: 'original' | downcase %}
+      {% if source == 'tryhackme' %}
+      <li class="writeup-item" style="flex-wrap: wrap; gap: 10px;">
+        
+        {% if writeup.banner %}
+        <img src="{{ writeup.banner | relative_url }}" alt="{{ writeup.title }} Logo" style="margin-right: 0;">
+        {% else %}
+        <img src="{{ '/assets/images/THMlogo-gray_scale.png' | relative_url }}" alt="Default Logo" style="margin-right: 0; max-width: 50px;">
+        {% endif %}
+        
+        <div class="writeup-title" style="min-width: 120px;">
+          {{ writeup.title | remove: " TryHackMe Walkthrough" | remove: " TryHackMe walkthrough" | remove: " TryHackme Walkthrough" | remove: " TryHackme walkthrough" }}
+          
+          <span class="tag-container">
+            {% if writeup.type %}
+            <span class="tag-type">{{ writeup.type }}</span>
+            {% endif %}
+            
+            {% if writeup.difficulty %}
+            <span class="tag-diff tag-{{ writeup.difficulty | downcase }}">{{ writeup.difficulty | capitalize }}</span>
+            {% endif %}
+          </span>
+        </div>
+        
+        <a href="{{ writeup.url | relative_url }}" class="view-btn" style="margin-top: 5px;">View Writeup</a>
+      </li>
+      {% endif %}
+    {% endfor %}
   </ul>
   
   <h2 class="footer-note">Other Websites and Writeups Coming Soon!</h2>

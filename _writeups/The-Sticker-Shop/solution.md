@@ -5,6 +5,9 @@ description: "A complete walkthrough for The Sticker Shop challenge on TryHackMe
 date: 2024-11-29
 banner: "assets/images/sticker.png"
 permalink: /writeups/the-sticker-shop
+type: "writeup"
+difficulty: "easy"
+source: "tryhackme"
 ---
 <br>
 

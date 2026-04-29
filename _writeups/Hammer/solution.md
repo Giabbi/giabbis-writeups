@@ -5,6 +5,9 @@ description: "Step-by-step TryHackMe Hammer walkthrough. Discover how to bypass 
 date: 2025-04-18
 banner: "assets/images/hammer.png"
 permalink: /writeups/hammer
+type: "writeup"
+difficulty: "medium"
+source: "tryhackme"
 ---
 <br>
 
